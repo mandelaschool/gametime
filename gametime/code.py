@@ -41,7 +41,7 @@ def menu_scene():
     text = []
     text1 = stage.Text(width=29, height=12, font=None, palette=constants.WHITE_PALETTE, buffer=None)
     text1.move(35,20)
-    text1.text("Space Racer")
+    text1.text("World Cup")
     text.append(text1)
 
     text2 = stage.Text(width=29, height=12, font=None, palette=constants.WHITE_PALETTE, buffer=None)
@@ -102,7 +102,7 @@ def tutorial():
     text = []
     text1 = stage.Text(width=29, height=12, font=None, palette=constants.RED_PALETTE, buffer=None)
     text1.move(5,10)
-    text1.text("Welcome to McDonalds.")
+    text1.text("Let's play football!")
     text.append(text1)
 
     text2 = []
@@ -175,7 +175,7 @@ def game_scene():
 
     background = stage.Grid(image_bank_background, constants.SCREEN_X, constants.SCREEN_Y)
 
-    ship = stage.Sprite(image_bank_sprites, 0, 60, 62)
+    kori = stage.Sprite(image_bank_sprites, 0, 60, 62)
 
     # keeps track of score
     score = 0
@@ -198,13 +198,13 @@ def game_scene():
         balls.append(a_single_ball)
 
     cards = []
-    for card_number in range(constants.TOTAL_NUMBER_OF_ASTEROIDS):
+    for card_number in range(constants.TOTAL_NUMBER_OF_CARDS):
         a_single_card = stage.Sprite(image_bank_sprites, 4, constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y)
         cards.append(a_single_card)
     show_card()
 
     goals = []
-    for goal_number in range(constants.TOTAL_NUMBER_OF_CARDS):
+    for goal_number in range(constants.TOTAL_NUMBER_OF_GOALS):
         a_single_goal = stage.Sprite(image_bank_sprites, 5, random.randint(10, 140), random.randint(10, 108))
         goals.append(a_single_goal)
     show_goal()
@@ -212,14 +212,13 @@ def game_scene():
     # set the layers of all sprites, items show up in order
     # and set the frame rate to 60fps
     game = stage.Stage(ugame.display, 60)
-    game.layers = [score_text] + goals + cards + balls + [ship] + [background]
+    game.layers = [score_text] + goals + cards + balls + [kori] + [background]
     game.render_block()
 
     while True:
         keys = ugame.buttons.get_pressed()
 
-        # ship movement code (replace kori with ship)
-        # ...same as before, just replace kori with ship...
+        # kori movement code
 
         def ball_shoot():
             """
@@ -266,13 +265,13 @@ def game_scene():
 
         for card_number in range(len(cards)):
             if cards[card_number].x > 0:
-                if stage.collide(cards[card_number].x + 1, cards[card_number].y, cards[card_number].x + 15, cards[card_number].y + 15, ship.x, ship.y, ship.x + 15, ship.y+15):
+                if stage.collide(cards[card_number].x + 1, cards[card_number].y, cards[card_number].x + 15, cards[card_number].y + 15, kori.x, kori.y, kori.x + 15, kori.y+15):
                     sound.stop()
                     sound.play(booking_sound)
                     time.sleep(3)
                     game_over.game_over_scene(score)
 
-        game.render_sprites(goals + cards + balls + [ship])
+        game.render_sprites(goals + cards + balls + [kori])
         game.tick()
 
 
